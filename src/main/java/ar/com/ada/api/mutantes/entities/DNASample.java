@@ -4,7 +4,7 @@ public class DNASample {
 
     private String[] sequence;
 
-    private DNASample(String[] sequence) {
+    public DNASample(String[] sequence) {
         this.sequence = sequence;
     }
 
