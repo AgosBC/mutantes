@@ -22,6 +22,18 @@ public class DNASample {
 
     }
 
+    public char[][] toMatrixMirror() {
+        char[][] matrix = toMatrix();
+        char[][] mirror = new char[matrix.length][matrix.length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                mirror[i][matrix.length-j-1]= matrix[i][j];
+            }
+        }
+        return matrix;
+    }
+
     // validaciones
     // madidas NxN
     public boolean isNxN() {
@@ -69,6 +81,22 @@ public class DNASample {
             return false; 
     
         return true;
+    }
+
+    public void printMatrix() {
+        char[][] matrix = toMatrix();
+        System.out.println();
+        for (int i = 0; i < matrix.length; i++) { // recorre por filas
+            for (int j = 0; j < matrix.length; j++) { // x cada fila, recorre las columnas
+                System.out.print(matrix[i][j]);
+            }
+            System.out.println();
+        }
+
+    }
+
+    public enum DNASampleType {
+        MUTANT, HUMAN
     }
 
 }

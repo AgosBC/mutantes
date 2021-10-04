@@ -58,7 +58,56 @@ class MutantesApplicationTests {
 
 				assertFalse(sampleMinuscula.isValid());
 	
-		}
+	}
+
+	@Test
+	void testearSiEsHumano() {
+		//boolean isMutant(String[] dna);
+		String[] dna = {"ATGCGA",
+						"CAGTGC",
+						"TTATTT",
+						"AGACGG",
+						"GCGTCA",
+						"TCACTG"};
+
+		assertFalse(mutantService.isMutant(dna));
+	}
+
+	@Test
+	void testearImpresion() {
+		//boolean isMutant(String[] dna);
+		String[] dna = {"ATGCGA",
+						"CAGTGC",
+						"TTATTT",
+						"AGACGG",
+						"GCGTCA",
+						"TCACTG"};
+		DNASample sample = new DNASample(dna);
+		sample.printMatrix();
+		assertTrue(true);
+	}
+
+	@Test
+	void testearSiEsMutante() {
+		//boolean isMutant(String[] dna);
+		String[] dna = {"ATGCGA",
+						"CAGTGC",
+						"TTATGT",
+						"AGAAGG",
+						"CCCCTA",
+						"TCACTG"};
+
+		assertTrue(mutantService.isMutant(dna));
+
+		String[] dnaMala = {"ATGCGAA",
+						 "CAGTGC",
+						 "TTATGT",
+						 "AGAAGG",
+						 "CCCCTA",
+						 "TCACTG"};
+
+		assertFalse(mutantService.isMutant(dnaMala));
+	}
 
 		
 
