@@ -1,12 +1,26 @@
 package ar.com.ada.api.mutantes.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.ada.api.mutantes.entities.DNASample;
+import ar.com.ada.api.mutantes.entities.Human;
+import ar.com.ada.api.mutantes.entities.Mutant;
+import ar.com.ada.api.mutantes.repos.HumanRepository;
+import ar.com.ada.api.mutantes.repos.MutantRepository;
+import ar.com.ada.api.mutantes.security.Crypto;
 
 @Service
 public class MutantService {
-    
+
+
+    @Autowired
+    MutantRepository mutantRepository;
+
+    @Autowired
+    HumanRepository humanRepository;
+
+
     //match by rows buscar combinacion de 4 caracteres iguales en las filas
 
     private int matchsByRows(char[][] matrix){
@@ -95,6 +109,45 @@ public class MutantService {
         //que la suma de secuencias encontradas, sea al menos 2
         return matchsByRow +  matchsByColumn + matchsByDiagonal1 + matchsByDiagonal2 > 1;
     }
+
+    public Mutant registerMutant(String name, String[] dna) {
+        Mutant mutant = new Mutant();
+        mutant.setName(name);
+        mutant.setDna(dna);
+
+        return mutantRepository.save(mutant);
+
+
+    }
+
+    public Human registerHuman(String name, String[] dna) {
+        Human human = new Human();
+        human.setName(name);
+        human.setDna(dna);
+
+        return humanRepository.save(human);
+    }
+
+    public String calculateHash(String[] dna){
+
+        StringBuilder sb = new StringBuilder(); //constructor de strings
+
+        for (String secuence : dna) {
+            sb.append(secuence + "|"); // por cada string de la secuencia, lo va a concatenar y agregar una |
+            
+        }
+        String dnaToHash = sb.toString(); //transforma ese string buider a un string que sera hasheada en hnaHashed
+
+        String dnaHashed = Crypto.hash(dnaToHash, "Magneto Rulz");
+
+        return dnaHashed; //devuelve el adn hasheado, algo unico que permitira hacer la comparacion para saber si la 
+                            // muestra yaexiste en la base de datos
+
+    }
+
+    
+
+    
 
     
 
