@@ -78,6 +78,24 @@ public class MutantController {
         
         return ResponseEntity.ok(r);
     }
+
+    /** como hacer metodos asyn en c# .net
+     * crear metodo async : public async Task<Human> registerHumanAsync(String name, String[] dna){bloque de codigo}
+     * al llamarlo , de la sig manera:
+     * Human human = await registerHumanAsync("wolverine", dnaSample)
+     * aqui se usa la palabra clave await
+     */
+
+     /** todo esto es de manera asincronica, comienza con un thread pero puede terminar por cualquier otro, no hay que 
+      * implementar threads, extends, etc. se usa el framework para que se encargue. cuando se encuentra un await asyn, 
+      * significa que el metodo es asincronico
+      */
+
+      /** las variables atomicas son variables que se ejecutaran automaticamente de forma concurrente, no tiene que
+       * ver con un tema asincronico si no con un tema de sincronismo. la variable atomica no deja que dos thread la 
+       * modifiquen al mismo tiempo. si no que cuando le hago una modificacion va a bloquear, va a dejar que se la modifique
+       * va a hacer que esperen las demas modificaciones hasta que termine
+       */
     
    
     
