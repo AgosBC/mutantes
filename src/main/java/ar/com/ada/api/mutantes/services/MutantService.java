@@ -1,6 +1,10 @@
 package ar.com.ada.api.mutantes.services;
 
+import java.util.concurrent.Future;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import ar.com.ada.api.mutantes.entities.DNASample;
@@ -123,6 +127,21 @@ public class MutantService {
 
 
     }
+    //springbot async
+    @Async
+    public Future<Mutant> registerMutantAsync(String name, String[] dna) {
+        Mutant mutant = new Mutant();
+        mutant.setName(name);
+        mutant.setDna(dna);
+        mutant.setUniqueHashDNA(this.calculateHash(dna));
+
+        if(existMutant(mutant))
+            return null;
+
+        mutantRepository.save(mutant);
+
+        return new AsyncResult<Mutant>(mutant);
+    }
 
     public Human registerHuman(String name, String[] dna) {
         Human human = new Human();
@@ -134,6 +153,21 @@ public class MutantService {
             return null;
 
         return humanRepository.save(human);
+    }
+    
+    @Async
+    public Future<Human> registerHumanAsync(String name, String[] dna) {
+        Human human = new Human();
+        human.setName(name);
+        human.setDna(dna);
+        human.setUniqueHashDNA(this.calculateHash(dna));
+
+        if (existHuman(human))
+            return null;
+
+        humanRepository.save(human);
+
+        return new AsyncResult<Human>(human);
     }
 
     public String calculateHash(String[] dna){
@@ -166,6 +200,8 @@ public class MutantService {
 
         
     }
+
+    
 
     
 
