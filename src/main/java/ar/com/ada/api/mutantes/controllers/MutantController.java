@@ -23,7 +23,6 @@ public class MutantController {
     
 
     @PostMapping(value="/mutant")
-    //TODO: process POST request
     public ResponseEntity<?> postMethodName(@RequestBody SampleRequest sampleRequest) {
 
         GenericResponse r = new GenericResponse();

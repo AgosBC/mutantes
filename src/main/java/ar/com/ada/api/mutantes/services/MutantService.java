@@ -114,6 +114,10 @@ public class MutantService {
         Mutant mutant = new Mutant();
         mutant.setName(name);
         mutant.setDna(dna);
+        mutant.setUniqueHashDNA(this.calculateHash(dna));
+
+        if(existMutant(mutant))
+            return null;
 
         return mutantRepository.save(mutant);
 
@@ -124,6 +128,10 @@ public class MutantService {
         Human human = new Human();
         human.setName(name);
         human.setDna(dna);
+        human.setUniqueHashDNA(this.calculateHash(dna));
+
+        if (existHuman(human))
+            return null;
 
         return humanRepository.save(human);
     }
@@ -143,6 +151,20 @@ public class MutantService {
         return dnaHashed; //devuelve el adn hasheado, algo unico que permitira hacer la comparacion para saber si la 
                             // muestra yaexiste en la base de datos
 
+    }
+
+    public boolean existMutant(Mutant mutant){
+        Mutant m = mutantRepository.findByUniqueHashDNA(mutant.getUniqueHashDNA());
+        return m != null;
+
+        
+    }
+
+    public boolean existHuman(Human human){
+        Human h = humanRepository.findByUniqueHashDNA(human.getUniqueHashDNA());
+        return h != null;
+
+        
     }
 
     
